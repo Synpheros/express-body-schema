@@ -1,3 +1,5 @@
+console.log('## Using express-body-schema version modified by Synpheros');
+
 const SchemaValidationError = require("./SchemaValidationError");
 
 const isDate = value => {
@@ -75,14 +77,15 @@ module.exports = (json, schema) => {
       var type = schema.properties[i].type;
       var value = json[i];
 
-      if (type === "array" && !(value instanceof Array)) {
+      if (type === "array" && !(Array.isArray(value))) {
         throw new SchemaValidationError("Invalid json. Expected " + i + " to be an Array but got " + typeof value);
+      }else{
+        return;
       }
 
       if (type === "number" && isNaN(value)) {
         throw new SchemaValidationError("Invalid json. Expected type of " + i + " to be " + type + " but got " + typeof value);
       }
-
       if (type === "id") {
 
         if (typeof value !== "string") {
